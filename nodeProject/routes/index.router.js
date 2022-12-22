@@ -6,5 +6,4 @@ router.get(
     '/test',
     controller
 )
-
 module.exports = router
