@@ -8,6 +8,7 @@
         <button id="form_button" *ngIf="!isVisible" type="submit">get branches</button>
         <form #form="ngForm" (ngSubmit)="onSubmitCommits(form)">
             <div *ngIf="isVisible">
+                <label for="branch">Select branch: </label>
                 <select [(ngModel)]="branchSelected" name="branchSelect">
                     <option *ngFor="let branche of branches" [value]="branche">
                         {{ branche }}
