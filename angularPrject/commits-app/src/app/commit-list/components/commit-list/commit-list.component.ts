@@ -11,8 +11,8 @@ export class CommitListComponent implements OnInit {
   isVisible = false;
   isVisibleError = false;
   branches: any = [];
-  branchSelected: string ='';
-  commits: any = []
+  branchSelected: string = '';
+  commits: any = [];
 
   constructor(private _commitsAppService: CommitsAppService) {}
 
@@ -40,22 +40,20 @@ export class CommitListComponent implements OnInit {
   }
 
   onSubmitCommits(form: any) {
-    console.log('====================================');
-    console.log(this.branchSelected);
-    console.log('====================================');
     this._commitsAppService
       .getCommitList(this.userName, this.repoName, this.branchSelected)
       .subscribe(
         (res) => {
-          console.log('====================================');
-          this.commits = res
-          console.log(res);
-          console.log('====================================');
+          this.commits = res;
         },
         (err) => {
           this.isVisibleError = true;
           this.isVisible = false;
         }
       );
+  }
+
+  reloadPage() {
+    location.reload();
   }
 }

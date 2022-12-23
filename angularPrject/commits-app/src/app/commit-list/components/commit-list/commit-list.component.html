@@ -1,33 +1,52 @@
-<div class="centered">
-    <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+<div id="container">
+    <h1>Technical Test</h1>
+    <form id="contact_form" #form="ngForm" (ngSubmit)="onSubmit(form)">
         <label for="userName">GitHub user Name: </label>
         <input type="text" id="name" name="userName" [(ngModel)]="userName" required />
-        <br />
         <label for="repoName">GitHub repo Name: </label>
         <input type="text" id="repoName" name="repoName" [(ngModel)]="repoName" required />
-        <br />
-        <div *ngIf="isVisibleError">Repo or User Not Found!</div>
-        <button *ngIf="!isVisible" type="submit">get branches</button>
+        <button id="form_button" *ngIf="!isVisible" type="submit">get branches</button>
+        <form #form="ngForm" (ngSubmit)="onSubmitCommits(form)">
+            <div *ngIf="isVisible">
+                <select [(ngModel)]="branchSelected" name="branchSelect">
+                    <option *ngFor="let branche of branches" [value]="branche">
+                        {{ branche }}
+                    </option>
+                </select>
+            </div>
+            <div *ngIf="isVisibleError">
+                <h1>Repo or User Not Found!</h1>
+            </div>
+            <button id="form_button" *ngIf="isVisible" type="submit">get commits</button>
+            <button id="form_button" *ngIf="isVisible" (click)="reloadPage()">Reload</button>
+        </form>
     </form>
-    <form #form="ngForm" (ngSubmit)="onSubmitCommits(form)">
-        <div *ngIf="isVisible">
-            <select [(ngModel)]="branchSelected" name="branchSelect">
-                <option *ngFor="let branche of branches" [value]="branche">
-                    {{ branche }}
-                </option>
-            </select>
-        </div>
-        <div *ngIf="isVisibleError">Repo or User Not Found!</div>
-        <button *ngIf="isVisible" type="submit">get commits</button>
-    </form>
-    <ul>
-        <li *ngFor="let commit of commits">
-            <img [src]="commit.avatar_url" alt="Place image title" width="20" height="20">
-            {{commit.login}}: {{commit.message}}
-            {{commit.date}}
+    <div>
+        <ul>
+            <li *ngFor="let commit of commits">
+                <div style="border-bottom: 1px solid #474544;">
+                    <div class="userData">
+                        <div class="avatar">
+                            <img [src]="commit.avatar_url" alt="Place image title" width="20" height="20" />
+                        </div>
+                        <div>
+                            <div class="login">
+                                {{ commit.login }}
+                            </div>
+                            <div class="date">
+                                {{ commit.date }}
+                            </div>
+                        </div>                     
 
-        </li>
-    </ul>
-    
 
+                    </div>
+                    <div class="message">
+                        {{ commit.message }}
+                    </div>
+
+                </div>
+
+            </li>
+        </ul>
+    </div>
 </div>
