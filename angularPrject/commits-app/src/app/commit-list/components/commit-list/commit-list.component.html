@@ -1,17 +1,33 @@
-<form #form="ngForm" (ngSubmit)="onSubmit(form)">
-    <label for="userName">GitHub user Name: </label>
-    <input type="text" id="name" name="userName" [(ngModel)]="userName" required>
-    <br>
-    <label for="repoName">GitHub repo Name: </label>
-    <input type="text" id="repoName" name="repoName" [(ngModel)]="repoName" required>
-    <br>
-    <div *ngIf="isVisible">
-        <select [(ngModel)]="branchSelected" name="branchSelect">
-            <option *ngFor="let branche of branches" [value]="branche">{{ branche }}</option>
-        </select>
-    </div>
-    <div *ngIf="isVisibleError">
-        Repo or User Not Found!
-    </div>
-    <button type="submit">Submit</button>
-</form>
+<div class="centered">
+    <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+        <label for="userName">GitHub user Name: </label>
+        <input type="text" id="name" name="userName" [(ngModel)]="userName" required />
+        <br />
+        <label for="repoName">GitHub repo Name: </label>
+        <input type="text" id="repoName" name="repoName" [(ngModel)]="repoName" required />
+        <br />
+        <div *ngIf="isVisibleError">Repo or User Not Found!</div>
+        <button *ngIf="!isVisible" type="submit">get branches</button>
+    </form>
+    <form #form="ngForm" (ngSubmit)="onSubmitCommits(form)">
+        <div *ngIf="isVisible">
+            <select [(ngModel)]="branchSelected" name="branchSelect">
+                <option *ngFor="let branche of branches" [value]="branche">
+                    {{ branche }}
+                </option>
+            </select>
+        </div>
+        <div *ngIf="isVisibleError">Repo or User Not Found!</div>
+        <button *ngIf="isVisible" type="submit">get commits</button>
+    </form>
+    <ul>
+        <li *ngFor="let commit of commits">
+            <img [src]="commit.avatar_url" alt="Place image title" width="20" height="20">
+            {{commit.login}}: {{commit.message}}
+            {{commit.date}}
+
+        </li>
+    </ul>
+    
+
+</div>
