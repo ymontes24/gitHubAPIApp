@@ -3,7 +3,7 @@ const controller = require('../controller/controller')
 const router = express.Router()
 
 router.get(
-    '/commits',
+    '/commits/:gitHubUser/:repoName/:branchName',
     controller.getCommits
 )
 

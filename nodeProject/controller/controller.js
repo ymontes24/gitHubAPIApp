@@ -1,11 +1,40 @@
 const axios = require('axios')
 
 module.exports.getCommits = async (req, res) => {
-    return res.status(200).json({ success: true });
+    const { gitHubUser, repoName, branchName } = req.params
+
+    var config = {
+        method: 'GET',
+        url: `${process.env.URLGITHUBAPI}/${gitHubUser}/${repoName}/commits?sha=${branchName}`
+    };
+
+    axios(config)
+        .then(function (response) {
+            let responseCommits = []
+            response.data.forEach(element => {
+                responseCommits.push({
+                    message: element.commit.message,
+                    date: element.commit.committer.date,
+                    login: element.committer.login,
+                    avatar_url: element.committer.avatar_url
+                })
+            })
+            responseCommits.sort(function (a, b) {
+                let keyA = a.date
+                let keyB = b.date;
+                if (keyA < keyB) return -1;
+                if (keyA > keyB) return 1;
+                return 0;
+            });
+            res.status(response.status).send(responseCommits)
+        })
+        .catch(function (error) {
+            res.status(error.response.status).send(error.message)
+        });
 };
 
 module.exports.getBranches = async (req, res) => {
-    const { gitHubUser , repoName} = req.params
+    const { gitHubUser, repoName } = req.params
 
     var config = {
         method: 'GET',
@@ -23,6 +52,6 @@ module.exports.getBranches = async (req, res) => {
             res.status(response.status).send(responseBranches)
         })
         .catch(function (error) {
-            res.status(error.response.status).send(error)
+            res.status(error.response.status).send(error.message)
         });
 };
