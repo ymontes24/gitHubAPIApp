@@ -1,4 +1,4 @@
-## Technical test for FULLTIMEFORCE
+## Technical test
 
 This is the solution for a technical test for FULLTIMEFORCE.
 The goal of this test will be to create an app that shows git commit history on this project.
