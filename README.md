@@ -1,6 +1,6 @@
 ## Technical test
 
-This is the solution for a technical test for FULLTIMEFORCE.
+This is the solution for a technical test.
 The goal of this test will be to create an app that shows git commit history on this project.
 
 First to all, make sure that you have the following technologies versions
